@@ -1,3 +1,4 @@
+use rand_distr::Distribution;
 use matrix::Matrix;
 
 pub mod matrix;
@@ -19,9 +20,17 @@ pub trait MatrixTrait: Clone {
     ///Creates a Matrix where all the values have the value elem
     fn constant_matrix(nrows : usize,ncols: usize,elem: Float) -> Self;
 
+    /// Creates a Matrix with random values that follow a distribution user defined
+    fn random_matrix_from_distribution( nrows: usize, ncols: usize, distribution: impl Distribution<Float>,) -> Self;
+
     /// Creates a Matrix with random values that follow a normal distribution
     fn random_normal(nrows : usize,ncols: usize, mean: Float, std: Float) -> Self;
-
+    /// Creates a Matrix with random values that follow a uniform distribution
+    fn random_uniform(nrows: usize, ncols: usize, mean: Float, std: Float) -> Self;
+    // Xavier/Glorot initialization using normal distribution
+    fn xavier_normal(nrows: usize, ncols: usize) -> Self;
+    // Xavier/Glorot initialization using uniform distribution
+    fn xavier_uniform(n_in: usize, n_out: usize) -> Self;
     ///Returns the shape of the Matrix
     fn shape(&self) -> (usize,usize);
 

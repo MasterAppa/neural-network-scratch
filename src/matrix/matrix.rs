@@ -1,6 +1,6 @@
 
 use ndarray::Array2;
-use rand_distr::{Normal, Distribution};
+use rand_distr::{Uniform, Normal, Distribution};
 use rand::thread_rng;
 use std::fmt;
 
@@ -36,13 +36,35 @@ impl MatrixTrait for Matrix{
         (self.0.nrows(), self.0.ncols())
     }
 
-    fn random_normal(nrows : usize,ncols: usize, mean: Float, std: Float) -> Self {
+    fn random_matrix_from_distribution( nrows: usize, ncols: usize, distribution: impl Distribution<Float>,) -> Self {
         let mut rng = thread_rng();
+        let data: Vec<Float> = (0..(nrows * ncols))
+            .map(|_| distribution.sample(&mut rng))
+            .collect();
+        Self(Array2::from_shape_vec((nrows, ncols), data).unwrap())
+    }
+
+    fn random_normal(nrows: usize, ncols: usize, mean: Float, std: Float) -> Self {
         let normal = Normal::new(mean, std).unwrap();
+        Matrix::random_matrix_from_distribution(nrows, ncols, normal)
+    }
 
-        let data: Vec<Float> = (0..(nrows*ncols)).map(|_| normal.sample(&mut rng)).collect();
+    fn random_uniform(nrows: usize, ncols: usize, low: Float, high: Float) -> Self {
+        let uniform = Uniform::new(low, high);
+        Matrix::random_matrix_from_distribution(nrows, ncols, uniform)
+    }
 
-        Self(Array2::from_shape_vec((nrows,ncols), data).unwrap())
+    fn xavier_uniform(nrows: usize, ncols: usize) -> Self {
+        let limit = (6.0 / (nrows as Float + ncols as Float)).sqrt();
+        let uniform = Uniform::new(-limit, limit);
+        Matrix::random_matrix_from_distribution(nrows, ncols, uniform)
+    }
+
+    
+    fn xavier_normal(nrows: usize, ncols: usize) -> Self {
+        let std_dev = (2.0 / (nrows as Float + ncols as Float)).sqrt();
+        let normal = Normal::new(0.0, std_dev).unwrap();
+        Matrix::random_matrix_from_distribution(nrows, ncols, normal)
     }
 
     
