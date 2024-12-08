@@ -14,7 +14,6 @@ pub struct Matrix(pub Array2<Float>);
 impl MatrixTrait for Matrix{
 
     fn zeros(nrows : usize, ncols: usize) -> Self {
-
         Self(Array2::zeros((nrows,ncols)))
     }
 
@@ -26,7 +25,6 @@ impl MatrixTrait for Matrix{
         Self(Array2::from_elem((nrows,ncols), elem))
     }
 
-    
     fn ones(nrows : usize,ncols: usize) -> Self{
         Self(Array2::ones((nrows,ncols)))
     }
@@ -60,14 +58,12 @@ impl MatrixTrait for Matrix{
         Matrix::random_matrix_from_distribution(nrows, ncols, uniform)
     }
 
-    
     fn xavier_normal(nrows: usize, ncols: usize) -> Self {
         let std_dev = (2.0 / (nrows as Float + ncols as Float)).sqrt();
         let normal = Normal::new(0.0, std_dev).unwrap();
         Matrix::random_matrix_from_distribution(nrows, ncols, normal)
     }
 
-    
     fn float_mul(&self, value: Float) -> Self {
         Self(&self.0 * value)
     }
