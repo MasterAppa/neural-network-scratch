@@ -7,7 +7,7 @@ use std::fmt;
 use super::{Float, MatrixTrait, E};
 
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct Matrix(pub Array2<Float>);
 
 
