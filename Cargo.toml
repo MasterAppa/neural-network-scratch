@@ -4,7 +4,7 @@ version = "0.0.2"
 edition = "2021"
 
 [dependencies]
-ndarray = { version = "0.16.1", features = ["serde"] }
+ndarray = { version = "0.15", features = ["serde"] }
 polars = { version = "0.45.0", features = ["lazy"] }
 rand = "0.8.5"
 rand_distr = "0.4.3"

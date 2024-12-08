@@ -1,4 +1,6 @@
 
+use std::fmt;
+
 use ndarray::Array2;
 use rand_distr::{Uniform, Normal, Distribution};
 use rand::thread_rng;
