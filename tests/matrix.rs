@@ -1,5 +1,5 @@
 use ndarray::Array2;
-use neural_network_scratch::matrix::{Matrix, MatrixTrait};
+use neural_network_scratch::matrix::{matrix::Matrix, MatrixTrait};
 
 
 #[test]

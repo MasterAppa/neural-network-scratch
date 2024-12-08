@@ -2,7 +2,7 @@
 use ndarray::Array2;
 use rand_distr::{Normal, Distribution};
 use rand::thread_rng;
-use std::{fmt, result};
+use std::fmt;
 
 use super::{Float, MatrixTrait, E};
 

@@ -1,6 +1,5 @@
-use matrix::{Matrix, MatrixTrait};
+use neural_network_scratch::matrix::{matrix::Matrix, MatrixTrait};
 
-mod matrix;
 
 
 
