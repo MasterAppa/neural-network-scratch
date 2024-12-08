@@ -1,66 +1,40 @@
 
-use ndarray::Array2;
-use polars::prelude::Scalar;
-use rand_distr::{Normal, Distribution};
-use rand::thread_rng;
-use std::fmt;
 
-#[cfg(feature = "f64")]
-pub type Float = Float;
 
-#[cfg(not(feature = "f64"))]
-pub type Float = f32;
+pub mod matrix;
+
+
+pub type Float = f64;
+
+
+pub const E: f64 = std::f64::consts::E;
 
 pub trait MatrixTrait: Clone {
+
+    ///Creates a Matrix with filled with 0s
     fn zeros(nrows : usize, ncols: usize) -> Self;
+
+    ///Creates a Matrix with only the diagonal with 1s, identity matrix
     fn identity(n: usize) -> Self;
+
+    ///Returns the shape of the Matrix
     fn shape(&self) -> (usize,usize);
+
+    /// Creates a Matrix with random values that follow a normal distribution
     fn random_normal(nrows : usize,ncols: usize, mean: Float, std: Float) -> Self;
+    
+    ///Calculates the multiplication between a Matrix and a value
+    fn float_mul(&self ,value: Float) -> Self;
+
+    ///The Matrix returned will be a Matrix of the exponent e^(self[i,j])
+    fn exp(&self) -> Self;
+
+    fn sigmoid(&self) -> Self;
+
+    ///Creates a Matrix where all the values have the value elem
+    fn constant_matrix(nrows : usize,ncols: usize,elem: Float) -> Self;
+
+    ///Creates a Matrix where all the values are 1s
+    fn ones(nrows : usize,ncols: usize) -> Self;
 }
-#[derive(Clone, Debug)]
-pub struct Matrix(pub Array2<Float>);
-
-
-impl MatrixTrait for Matrix{
-    fn zeros(nrows : usize, ncols: usize) -> Self {
-        Self(Array2::zeros((nrows,ncols)))
-    }
-    fn identity(n: usize) -> Self {
-        Self(Array2::eye(n))
-    }
-    fn shape(&self) -> (usize,usize) {
-        (self.0.nrows(), self.0.ncols())
-    }
-
-    fn random_normal(nrows : usize,ncols: usize, mean: Float, std: Float) -> Self {
-        let mut rng = thread_rng();
-        let normal = Normal::new(mean, std).unwrap();
-
-        let data: Vec<Float> = (0..(nrows*ncols)).map(|_| normal.sample(&mut rng)).collect();
-
-        Self(Array2::from_shape_vec((nrows,ncols), data).unwrap())
-    }
-}
-
-
-impl Matrix {
-    pub fn print(&self) {
-        println!("{:?}", self.0);
-    }
-}
-
-impl fmt::Display for Matrix {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "Matrix {}x{}:\n", self.0.nrows(), self.0.ncols())?;
-        for i in 0..self.0.nrows() {
-            for j in 0..self.0.ncols() {
-                write!(f, "{}\t", self.0[[i, j]])?;
-            }
-            writeln!(f)?;
-        }
-        Ok(())
-    }
-}
-
-
 
