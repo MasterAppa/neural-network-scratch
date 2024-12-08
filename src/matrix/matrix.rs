@@ -2,12 +2,13 @@
 use ndarray::Array2;
 use rand_distr::{Uniform, Normal, Distribution};
 use rand::thread_rng;
-use std::fmt;
+use serde::{Deserialize, Serialize};
+
 
 use super::{Float, MatrixTrait, E};
 
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq,Serialize, Deserialize)]
 pub struct Matrix(pub Array2<Float>);
 
 
