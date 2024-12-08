@@ -9,7 +9,8 @@ pub enum Initializers {
     Uniform,
     UniformSigned,
     Normal,
-    XavierUniform
+    XavierUniform,
+    XavierNormal
 }
 
 impl Initializers {
@@ -18,8 +19,14 @@ impl Initializers {
             Initializers::Zeros => Matrix::zeros(nrows, ncols),
             Initializers::Uniform => Matrix::random_uniform(nrows, ncols, 0., 1.0),
             Initializers::UniformSigned => Matrix::random_uniform(nrows, ncols, -1.0, 1.0),
-            
+            Initializers::Normal => Matrix::random_normal(nrows, ncols, 0., 1.0),
+            Initializers::XavierUniform => Matrix::xavier_uniform(nrows, ncols),
+            Initializers::XavierNormal => Matrix::xavier_normal(nrows, ncols)
 
         }
+    }
+
+    fn gen_vector(&self, nrows: usize) -> Matrix{
+        self.gen_matrix(nrows, 1)
     }
 }
