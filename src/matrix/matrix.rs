@@ -2,7 +2,7 @@
 use ndarray::Array2;
 use rand_distr::{Normal, Distribution};
 use rand::thread_rng;
-use std::fmt;
+use std::{fmt, result};
 
 use super::{Float, MatrixTrait, E};
 
@@ -54,11 +54,26 @@ impl MatrixTrait for Matrix{
     fn exp(&self) -> Self {
         Self(self.0.mapv(Float::exp))
     }
-    
-    // Apply the sigmoid function to each element in the matrix
+
     fn sigmoid(&self) -> Self {
         let sigmoid_matrix = self.0.mapv(|x| 1.0 / (1.0 + E.powf(-x)));
         Self(sigmoid_matrix)
+    }
+
+    fn sigmoid_derivative(&self) -> Self {
+        // Compute sigmoid and its derivative
+        let sigmoid_matrix = self.sigmoid();
+        let result_matrix = sigmoid_matrix.0.mapv(|x| x * (1.0 - x));  // Sigmoid derivative: sigmoid(x) * (1 - sigmoid(x))
+        Self(result_matrix)
+    }
+
+    fn matrix_mul(&self, other: &Matrix) -> Self {
+        Self(&self.0 * &other.0)
+    }
+
+    fn dot(&self, other: &Matrix) -> Self{
+        let result = self.0.dot(&other.0);
+        Self(result.clone())
     }
 }
 

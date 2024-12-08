@@ -1,5 +1,4 @@
-
-
+use matrix::Matrix;
 
 pub mod matrix;
 
@@ -36,5 +35,10 @@ pub trait MatrixTrait: Clone {
 
     ///Creates a Matrix where all the values are 1s
     fn ones(nrows : usize,ncols: usize) -> Self;
+
+    fn matrix_mul(&self, other: &Matrix) -> Self;
+    fn dot(&self, other: &Matrix) -> Self;
+
+    fn sigmoid_derivative(&self) -> Self;
 }
 
