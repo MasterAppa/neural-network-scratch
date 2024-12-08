@@ -17,7 +17,7 @@ fn default_epsilon() -> Float {
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
-struct AdamOptimizer {
+pub struct AdamOptimizer {
     // Hyperparameters
     #[serde(default = "default_learning_rate")]
     pub learning_rate_schedule: LearningRateSchedule,          // Learning rate
