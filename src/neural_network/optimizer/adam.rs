@@ -98,7 +98,7 @@ impl AdamOptimizer{
 
         // Get the current learning rate for this epoch
         let lr = self.learning_rate_schedule.get_learning_rate(epoch);
-        let mut params_mut = params.clone()
+        let mut params_mut = params.clone();
         // Update parameters using Adam's rule
         Zip::from(&mut params_mut.0)
             .and(&m_hat)
