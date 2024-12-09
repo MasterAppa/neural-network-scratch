@@ -96,6 +96,42 @@ impl MatrixTrait for Matrix{
         let result = self.0.dot(&other.0);
         Self(result.clone())
     }
+
+    fn component_mul(&self, other: &Matrix) -> Matrix {
+        Matrix(&self.0 * &other.0)
+    }
+
+    fn component_add(&self, other: &Matrix) -> Matrix {
+        Matrix(&self.0 + &other.0)
+    }
+
+    fn component_sub(&self, other: &Matrix) -> Matrix {
+        Matrix(&self.0 - &other.0)
+    }
+
+    fn component_div(&self, other: &Matrix) -> Matrix {
+        Matrix(&self.0 / &other.0)
+    }
+
+    fn scalar_mul(&self, scalar: Float) -> Matrix {
+        self.float_mul(scalar)
+    }
+
+    fn scalar_div(&self, scalar: Float) -> Matrix {
+        Matrix(&self.0 / scalar)
+    }
+
+    fn scalar_add(&self, scalar: Float) -> Matrix {
+        Matrix(&self.0 + scalar)
+    }
+
+    fn scalar_sub(&self, scalar: Float) -> Matrix {
+        Matrix(&self.0 - scalar)
+    }
+
+    fn sqrt(&self) -> Matrix {
+        Matrix(self.0.mapv(|x| x.sqrt()))
+    }
 }
 
 

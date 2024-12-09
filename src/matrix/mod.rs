@@ -51,5 +51,15 @@ pub trait MatrixTrait: Clone {
 
     fn sigmoid_derivative(&self) -> Self;
 
+    fn component_mul(&self, other: &Matrix) -> Matrix;
+    fn component_add(&self, other: &Matrix) -> Matrix;
+    fn component_sub(&self, other: &Matrix) -> Matrix;
+    fn component_div(&self, other: &Matrix) -> Matrix;
+    fn scalar_mul(&self, scalar: Float) -> Matrix;
+    fn scalar_div(&self, scalar: Float) -> Matrix;
+    fn scalar_add(&self, scalar: Float) -> Matrix;
+    fn scalar_sub(&self, scalar: Float) -> Matrix;
+    fn sqrt(&self) -> Matrix;
+
 }
 
