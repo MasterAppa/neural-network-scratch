@@ -41,7 +41,7 @@ impl Layer for ActivationLayer{
         self.output = Some(output.clone());
         output 
     }
-    fn backward(&mut self, output_gradient: Matrix) -> Matrix {
+    fn backward(&mut self, epoch: usize, output_gradient: Matrix) -> Matrix {
         match self.derivative{
             ActivationFnDerivative::ActivationFn(f) => {
                 let input_temp = self.input.clone().unwrap();

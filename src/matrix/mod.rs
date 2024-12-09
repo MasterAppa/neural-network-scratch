@@ -1,3 +1,4 @@
+use ndarray::Axis;
 use rand_distr::Distribution;
 use matrix::Matrix;
 
@@ -60,6 +61,12 @@ pub trait MatrixTrait: Clone {
     fn scalar_add(&self, scalar: Float) -> Matrix;
     fn scalar_sub(&self, scalar: Float) -> Matrix;
     fn sqrt(&self) -> Matrix;
-
+    fn transpose(&self) -> Self;
+    fn broadcast(&self, dim : (usize,usize)) -> Self;
+    fn sum_axis(&self, axis: Axis) -> Self;
+    fn get_column(&self, idx: usize) -> Vec<Float>;
+    fn get_data_col_leading(&self) -> Vec<Vec<Float>>;
+    fn from_column_leading_vector2(m: &Vec<Vec<Float>>) -> Self;
+    fn from_column_vector(v: &Vec<Float>) -> Self;
 }
 

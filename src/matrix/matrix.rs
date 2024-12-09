@@ -1,7 +1,7 @@
 
 use std::fmt;
 
-use ndarray::Array2;
+use ndarray::{Array2, Axis};
 use rand_distr::{Uniform, Normal, Distribution};
 use rand::thread_rng;
 use serde::{Deserialize, Serialize};
@@ -131,6 +131,51 @@ impl MatrixTrait for Matrix{
 
     fn sqrt(&self) -> Matrix {
         Matrix(self.0.mapv(|x| x.sqrt()))
+    }
+
+    fn transpose(&self) -> Self {
+        let mat = self.0.clone().reversed_axes();
+        Self(mat)
+    }
+
+    fn broadcast(&self, dim : (usize,usize)) -> Self{
+        let mat = self.0.broadcast(dim).unwrap();
+        Self(mat.to_owned())
+    }
+
+    fn sum_axis(&self, axis: Axis) -> Self {
+        let summed = self.0.sum_axis(axis);  // Sum along the specified axis
+
+        let reshaped = if axis == Axis(0) {
+            summed.insert_axis(Axis(0))  
+        } else {
+            summed.insert_axis(Axis(1))  
+        };
+        Self(reshaped)
+    }
+
+    fn get_column(&self, idx: usize) -> Vec<Float> {
+        let col = self.0.column(idx);
+        col.to_vec()
+    }
+
+    fn get_data_col_leading(&self) -> Vec<Vec<Float>> {
+        (0..self.0.ncols())
+            .map(|i| self.get_column(i))  // Get the column at index i
+            .collect()
+    }
+
+    fn from_column_leading_vector2(m: &Vec<Vec<Float>>) -> Self {
+        let mat = Array2::from_shape_fn(
+            (m[0].len(), m.len()), 
+            |(i, j)| m[j][i]
+        );
+        Self(mat)
+    }
+
+    fn from_column_vector(v: &Vec<Float>) -> Self {
+        let mat = Array2::from_shape_vec((v.len(), 1), v.clone()).unwrap();
+        Self(mat)
     }
 }
 

@@ -25,12 +25,12 @@ impl Initializers {
         }
     }
     // Generates a matrix of size (nrows, 1), a column vector
-    fn gen_vector(&self, nrows: usize) -> Matrix {
+    pub fn gen_vector(&self, nrows: usize) -> Matrix {
         self.gen_matrix_internal(nrows, 1)
     }
 
     // Generates a matrix of size (nrows, ncols)
-    fn gen_matrix(&self, nrows: usize, ncols: usize) -> Matrix {
+    pub fn gen_matrix(&self, nrows: usize, ncols: usize) -> Matrix {
         self.gen_matrix_internal(nrows, ncols)
     }
 }

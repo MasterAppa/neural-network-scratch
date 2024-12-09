@@ -17,7 +17,7 @@ pub trait Layer{
 
     fn forward(&mut self, input: Matrix) -> Matrix;
 
-    fn backward(&mut self, output_gradient: Matrix) -> Matrix;
+    fn backward(&mut self, epoch: usize, output_gradient: Matrix) -> Matrix;
 }
 
 
