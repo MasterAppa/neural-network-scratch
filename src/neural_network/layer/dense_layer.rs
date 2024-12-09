@@ -1,3 +1,5 @@
+use std::fmt;
+
 use ndarray::Axis;
 use rand::distributions::weighted;
 
@@ -55,7 +57,7 @@ impl Layer for DenseLayer{
         let weights_gradient = output_gradient.dot(&input.transpose());
     
         // Calculate the gradient with respect to biases (dL/db): sum over the rows (examples in the batch)
-        let biases_gradient = output_gradient.sum_axis(Axis(0));  // Sum along the rows (batch size)
+        let biases_gradient = output_gradient.sum_axis(Axis(0));
     
         // Calculate the gradient with respect to the input (dL/dInput): self.weights.T * output_gradient
         let input_gradient = self.weights.transpose().dot(&output_gradient);
@@ -85,5 +87,11 @@ impl LearnableLayer for DenseLayer {
         let (weights, biases) = params_matrix.split_at(params_matrix.len() - 1); // Split weights and biases
         self.weights = Matrix::from_column_leading_vector2(&weights.to_vec());
         self.bias = Matrix::from_column_vector(&biases[0]);           
+    }
+}
+
+impl fmt::Debug for DenseLayer {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "Dense Layer")
     }
 }

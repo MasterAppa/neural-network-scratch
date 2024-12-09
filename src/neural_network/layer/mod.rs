@@ -5,6 +5,7 @@ use crate::matrix::Float;
 use crate::neural_network::activation::Activation;
 
 pub mod dense_layer;
+pub mod full_layer;
 pub enum Layers{
     //Layers can be Dense Layers or just Activation Layers
     Dense,

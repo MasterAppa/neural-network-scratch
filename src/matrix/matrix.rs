@@ -177,6 +177,21 @@ impl MatrixTrait for Matrix{
         let mat = Array2::from_shape_vec((v.len(), 1), v.clone()).unwrap();
         Self(mat)
     }
+
+    fn from_fn<F>(nrows: usize, ncols: usize, f: F) -> Self
+    where
+        F: Fn(usize, usize) -> Float,
+    {
+        let mat = Array2::from_shape_fn((nrows, ncols), |(i, j)| f(i, j));
+        Self(mat)
+    }
+
+    fn map<F>(&self, f: F) -> Self 
+    where 
+        F: Fn(&Float) -> Float 
+    {
+        Matrix(self.0.map(|x| f(x)))
+    }
 }
 
 

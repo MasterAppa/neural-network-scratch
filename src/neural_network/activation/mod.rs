@@ -1,3 +1,5 @@
+use std::fmt;
+
 use serde::{Deserialize, Serialize};
 
 use crate::matrix::{matrix::Matrix, MatrixTrait};
@@ -69,5 +71,11 @@ impl Activation{
             Self::Linear => linear::new(),
             Self::Sigmoid => sigmoid::new()
         }
+    }
+}
+
+impl fmt::Debug for ActivationLayer {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "Activation Layer")
     }
 }

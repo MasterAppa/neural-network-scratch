@@ -68,5 +68,13 @@ pub trait MatrixTrait: Clone {
     fn get_data_col_leading(&self) -> Vec<Vec<Float>>;
     fn from_column_leading_vector2(m: &Vec<Vec<Float>>) -> Self;
     fn from_column_vector(v: &Vec<Float>) -> Self;
+
+    fn from_fn<F>(nrows: usize, ncols: usize, f: F) -> Self
+    where
+        F: Fn(usize, usize) -> Float;
+
+    fn map<F>(&self, f: F) -> Self 
+        where 
+            F: Fn(&Float) -> Float;
 }
 
