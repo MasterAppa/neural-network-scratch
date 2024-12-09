@@ -14,7 +14,7 @@ fn test_adam_optimizer() {
     adam.init(params.shape().0,params.shape().1);
 
     for epoch in 1..=5 {
-        adam.update(&mut params, &grads, epoch);
+        params = adam.update(&params, &grads,epoch);
         println!("Epoch {}: {:?}", epoch, params);
     }
 }
